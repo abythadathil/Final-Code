@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Noise Tracker</string>
+
+    <string-array name="titles">
+        <item>MONDAY</item>
+        <item>TUESDAY</item>
+        <item>WEDNESDAY</item>
+        <item>THURSDAY</item>
+        <item>FRIDAY</item>
+        <item>SATURDAY</item>
+        <item>SUNDAY</item>
+
+    </string-array>
+</resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.appyplus.soundmeter">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SoundMeter">
+        <activity android:name="com.app.noisetracker.Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.app.noisetracker.Saturday"
+            android:label="Saturday"/>
+        <activity android:name="com.app.noisetracker.Friday"
+            android:label="Friday"/>
+        <activity android:name="com.app.noisetracker.Thursday"
+            android:label="Thursday"/>
+        <activity android:name="com.app.noisetracker.Wednesday"
+            android:label="Wednesday"/>
+        <activity android:name="com.app.noisetracker.Tuesday"
+            android:label="Tuesday"/>
+        <activity android:name="com.app.noisetracker.Monday"
+            android:label="Monday"/>
+        <activity android:name="com.app.noisetracker.Sunday"
+            android:label="Sunday"/>
+        <activity android:name="com.app.noisetracker.RecordingSchedule"
+            android:label="Recording Schedule"/>
+        <activity android:name="com.app.noisetracker.soundtype"
+            android:label="Sound Classification"/>
+        <activity android:name="com.app.noisetracker.EmailFrequency"
+            android:label="Email Frequency"/>
+        <activity android:name="com.app.noisetracker.SetEmail"
+            android:label="Set Email"/>
+        <activity android:name="com.app.noisetracker.Settings"
+            android:label="Configuration"/>
+        <activity
+            android:name="com.app.noisetracker.MainActivity"
+            android:exported="true"
+            >
+        </activity>
+
+        <receiver
+            android:name="com.app.noisetracker.EmailAlarm"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.app.noisetracker.StartRecorder"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.app.noisetracker.StopRecorder"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service android:name="com.app.noisetracker.EmailService"
+            android:foregroundServiceType="location"
+            android:exported="true"
+            android:enabled="true"></service>
+    </application>
+
+</manifest>
