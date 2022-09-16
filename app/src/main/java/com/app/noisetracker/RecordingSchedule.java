@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.appyplus.soundmeter.R;
+import com.app.noisetracker.R;
 
 public class RecordingSchedule extends AppCompatActivity {
 

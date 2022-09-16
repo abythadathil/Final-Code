@@ -1,4 +1,4 @@
-package com.appyplus.soundmeter;
+package com.app.noisetracker;
 
 import android.content.Context;
 

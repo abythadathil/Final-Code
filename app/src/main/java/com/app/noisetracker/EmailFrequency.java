@@ -1,6 +1,5 @@
 package com.app.noisetracker;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -28,9 +26,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.appyplus.soundmeter.R;
+import com.app.noisetracker.R;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class EmailFrequency extends AppCompatActivity {
@@ -379,6 +376,8 @@ public class EmailFrequency extends AppCompatActivity {
 
         //setting the repeating alarm that will be fired every day
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1500,AlarmManager.INTERVAL_HOUR,pi);
+
+  //      am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1500,pi);
 
         Toast.makeText(this, "Email configured..", Toast.LENGTH_SHORT).show();
     }

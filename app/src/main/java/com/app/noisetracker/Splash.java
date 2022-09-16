@@ -8,14 +8,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
-import com.appyplus.soundmeter.R;
+import com.app.noisetracker.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
