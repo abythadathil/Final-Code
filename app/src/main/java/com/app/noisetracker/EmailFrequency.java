@@ -1,6 +1,5 @@
 package com.app.noisetracker;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,7 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.appyplus.soundmeter.R;
+import com.app.noisetracker.R;
 
 import java.time.LocalDate;
 import java.util.Calendar;

@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appyplus.soundmeter.R;
+import com.app.noisetracker.R;
 import com.github.capur16.digitspeedviewlib.DigitSpeedView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -39,7 +39,6 @@ import com.google.android.gms.tasks.Task;
 
 import org.tensorflow.lite.support.audio.TensorAudio;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -47,8 +46,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-
-import de.nitri.gauge.Gauge;
 
 
 public class MainActivity extends AppCompatActivity {
