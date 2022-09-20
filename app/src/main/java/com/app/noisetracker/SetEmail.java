@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.noisetracker.R;
+import com.appyplus.soundmeter.R;
 
 public class SetEmail extends AppCompatActivity {
 

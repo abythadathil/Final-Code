@@ -1,4 +1,4 @@
-package com.app.noisetracker;
+package com.appyplus.soundmeter;
 
 import org.junit.Test;
 

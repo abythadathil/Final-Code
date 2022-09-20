@@ -64,8 +64,14 @@ public class CsvWriter {
         File file = new File(CSV_FILE_PATH + fileName + CSV_FILE__NAME_EXTENSION);
 
  //       File file = new File("Noise.csv");
-        if (!file.exists())
+        if (!file.exists()) {
             file.createNewFile();
+        }else{
+            file.delete();
+
+           file.createNewFile();
+
+        }
 
 
         return file;

@@ -1,5 +1,6 @@
 package com.app.noisetracker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -26,8 +28,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.app.noisetracker.R;
+import com.appyplus.soundmeter.R;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class EmailFrequency extends AppCompatActivity {
@@ -207,17 +210,35 @@ public class EmailFrequency extends AppCompatActivity {
                         myEdit.putString("day", spinner_item );
                         myEdit.apply();
 
+    //                    Toast.makeText(EmailFrequency.this,day,Toast.LENGTH_LONG).show();
+
+                        String today= "";
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            today = LocalDate.now().getDayOfWeek().name();
+                        }
+
+                        //        Toast.makeText(MainActivity.this,today,Toast.LENGTH_LONG).show();
 
 
+                        if(today.contains(spinner_item)){
 
-                 //       setAlarmweekly(c.getTimeInMillis());
+                            Calendar c = Calendar.getInstance();
+
+                            c.setTimeInMillis(System.currentTimeMillis());
+
+                            c.set(Calendar.HOUR_OF_DAY,selecthour2);
+                            c.set(Calendar.MINUTE, selectmin2);
+                            setAlarmweekly(c);
+
+                        }
+
 
                         dialog.cancel();
 
-                        Toast.makeText(EmailFrequency.this, "Email configured..", Toast.LENGTH_SHORT).show();
+           //             Toast.makeText(EmailFrequency.this, "Email configured..", Toast.LENGTH_SHORT).show();
 
 
-                        startActivity(new Intent(EmailFrequency.this,MainActivity.class));
+         //               startActivity(new Intent(EmailFrequency.this,MainActivity.class));
                     }
                 });
 
@@ -377,8 +398,7 @@ public class EmailFrequency extends AppCompatActivity {
         //setting the repeating alarm that will be fired every day
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1500,AlarmManager.INTERVAL_HOUR,pi);
 
-  //      am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1500,pi);
-
+  //      am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+1000,pi);
         Toast.makeText(this, "Email configured..", Toast.LENGTH_SHORT).show();
     }
 
@@ -400,7 +420,7 @@ public class EmailFrequency extends AppCompatActivity {
         Toast.makeText(this, "Email configured " + c.get(Calendar.HOUR_OF_DAY)+ ":" + c.get(Calendar.MINUTE) , Toast.LENGTH_SHORT).show();
     }
 
-    private void setAlarmweekly(long time) {
+    private void setAlarmweekly(Calendar c) {
         //getting the alarm manager
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -411,7 +431,7 @@ public class EmailFrequency extends AppCompatActivity {
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_IMMUTABLE);
 
         //setting the repeating alarm that will be fired every day
-        am.set(AlarmManager.RTC, time, pi);
+        am.set(AlarmManager.RTC, c.getTimeInMillis(), pi);
 
         Toast.makeText(this, "Email configured..", Toast.LENGTH_SHORT).show();
     }

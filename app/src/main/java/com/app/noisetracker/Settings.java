@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.app.noisetracker.R;
+import com.appyplus.soundmeter.R;
 
 public class Settings extends AppCompatActivity {
 

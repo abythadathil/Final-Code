@@ -15,11 +15,14 @@ import androidx.annotation.RequiresApi;
 
 import com.opencsv.CSVWriter;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -48,6 +51,20 @@ public class EmailAlarm extends BroadcastReceiver {
 
     public final String host = "34.123.81.5";
 
+    private static final String CSV_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + "download" + File.separator;
+
+
+    private static final String CSV_FILE__NAME_EXTENSION = ".csv";
+
+
+    private static final String CSV_FILE_CHARSET = "UTF-8";
+
+
+    private static final byte[] CSV_FILE_BOM = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+
+
+    private static final String CSV_SEPARATOR = ",";
+
     public final String database = "postgres";
     public final int port = 5432;
     public final String user = "postgres";
@@ -60,12 +77,7 @@ public class EmailAlarm extends BroadcastReceiver {
 
     SharedPreferences sh;
 
-    private static final String CSV_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + "download" + File.separator;
 
-    /*
-        檔案副檔名
-     */
-    private static final String CSV_FILE__NAME_EXTENSION = ".csv";
 
     String pathname;
 
@@ -80,11 +92,12 @@ public class EmailAlarm extends BroadcastReceiver {
 
 
 
-        this.url = String.format(this.url, this.host, this.port, this.database);
+            this.url = String.format(this.url, this.host, this.port, this.database);
 
         connect2(context);
 
-        pathname = CSV_FILE_PATH + "Noise" + CSV_FILE__NAME_EXTENSION;
+
+            pathname = CSV_FILE_PATH + "Noise" + CSV_FILE__NAME_EXTENSION;
 
         sh = context.getSharedPreferences("EmailPref", MODE_PRIVATE);
 
@@ -100,7 +113,7 @@ public class EmailAlarm extends BroadcastReceiver {
 
 
                 try {
-                    sendEmail();
+                    sendEmail(context);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -117,11 +130,6 @@ public class EmailAlarm extends BroadcastReceiver {
             public void run() {
 
                 //          FileOutputStream fileWriter = null;
-                String col = "ID,NAME,EMAIL,COUNTRY,PASSWORD";
-
-                String Path = Environment.getExternalStorageDirectory().toString() + "/Pictures/SMA/test.csv";
-
-                File f = new File("Noise.csv");
 
 
 
@@ -139,13 +147,17 @@ public class EmailAlarm extends BroadcastReceiver {
 
 
 
-                        // write header line containing column names
+
 
                         ResultSet resultSet = statement.executeQuery(sqlSelect)){
 
-        //            FileOutputStream fos = context.openFileOutput("data.txt",MODE_PRIVATE);
+                    FileOutputStream fos = context.openFileOutput("data.csv",MODE_PRIVATE);
 
-      //              CSVWriter writer = new CSVWriter(new FileWriter(Path));
+                    fos.write(CSV_FILE_BOM);
+
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, CSV_FILE_CHARSET);
+                    BufferedWriter bw = new BufferedWriter(osw);
+
 
 
 
@@ -171,36 +183,19 @@ public class EmailAlarm extends BroadcastReceiver {
                         oneLineColumns.add(type);
                         oneLineColumns.add(location);
 
-                        contents.add(oneLineColumns);
+                        writeOneLine(bw,oneLineColumns);
 
 
 
-                        //                 Toast.makeText(MainActivity.this, name, Toast.LENGTH_LONG).show();
 
-
-
-         //               fos.write(line.getBytes());
-        //                writer.writeNext(line2);
-
-
-
-                        //                 fileWriter.newLine();
-                        //                 fileWriter.write(line);
                     }
 
-                    CsvWriter.toCsvFile(contents);
 
-                    //                      statement.close();
-                    //                      fos.close();
-
-
-
-        //            savepath = context.getFilesDir() + "/" + "data.txt";
 
                     savepath = pathname;
 
 
-                }catch (SQLException e){
+                }catch (SQLException | IOException e){
 
                 }
 
@@ -216,13 +211,34 @@ public class EmailAlarm extends BroadcastReceiver {
         }
     }
 
-    public void sendEmail() {
+
+
+    private static void writeOneLine(BufferedWriter writer, List<String> oneLineColumns) throws IOException {
+        if (null != writer && null != oneLineColumns)
+        {
+            StringBuffer oneLine = new StringBuffer();
+            for (String column : oneLineColumns)
+            {
+                oneLine.append(CSV_SEPARATOR);
+
+                oneLine.append("\"");
+                oneLine.append(null != column ? column.replaceAll("\"", "\"\"") : "");
+                oneLine.append("\"");
+            }
+
+            writer.write(oneLine.toString().replaceFirst(",", ""));
+            writer.newLine();
+        }
+    }
+
+
+    public void sendEmail(Context context) {
 
         String subject = "Noise Tracker Update";
    //     String message = value + " Type: " + MainActivity.mainActivityRunningInstance.noisetype;
 
         //Creating SendMail object
-        SendMail sm = new SendMail(email, "Noise Tracker Update","Please find attached Noise details",pathname);
+        SendMail sm = new SendMail(email, "Noise Tracker Update","Please find attached Noise details",context.getFilesDir() + "/" + "data.csv");
 
 
         //Executing sendmail to send email

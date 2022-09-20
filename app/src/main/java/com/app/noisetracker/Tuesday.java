@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.app.noisetracker.R;
+import com.appyplus.soundmeter.R;
 
 import java.util.Calendar;
 

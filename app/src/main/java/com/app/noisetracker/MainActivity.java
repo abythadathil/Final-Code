@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.noisetracker.R;
+import com.appyplus.soundmeter.R;
 import com.github.capur16.digitspeedviewlib.DigitSpeedView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -39,12 +39,16 @@ import com.google.android.gms.tasks.Task;
 
 import org.tensorflow.lite.support.audio.TensorAudio;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
+
+import de.nitri.gauge.Gauge;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -353,7 +357,12 @@ try {
 
                 c.set(Calendar.HOUR_OF_DAY,hour2);
                 c.set(Calendar.MINUTE, min2);
-                setAlarmweekly(c);
+
+                Date cu = Calendar.getInstance().getTime();
+
+                if(cu.before(c.getTime())) {
+                    setAlarmweekly(c);
+                }
 
             }
 
@@ -410,7 +419,7 @@ try {
         //setting the repeating alarm that will be fired every day
         am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi);
 
-        Toast.makeText(this, "Email configured..", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Email configured..", Toast.LENGTH_SHORT).show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
